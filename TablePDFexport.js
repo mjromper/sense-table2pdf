@@ -2,7 +2,7 @@ define( [
     "jquery",
     "qlik",
     "./makePDF",
-    "css!./TablePDFexport.css"    
+    "css!./TablePDFexport.css"
 ],
 
     function ( jquery,qlik, makePDF ) {
@@ -23,9 +23,9 @@ define( [
                         }
                         $( el ).find( '.SmartExport-btn' ).on( 'click', function () {
 
-                            makePDF.do("#QV01", s);
+                            makePDF.do(s);
 
-                        })
+                        });
                     }
                 } );
             }

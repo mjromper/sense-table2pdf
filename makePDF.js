@@ -10,7 +10,7 @@ define(
         "jspdf-autotable"
     ],
 
-function( jquery, jsPDF, html2canvas, autotable ){
+function( jquery, jsPDF, autotable ){
 
 
     var autoTableFromData = function ( headers, data ) {
@@ -23,8 +23,8 @@ function( jquery, jsPDF, html2canvas, autotable ){
                 overflow: 'linebreak'
             }
         });
-        doc.save("output.pdf");
-        //doc.output('dataurlnewwindow');
+
+        doc.output('dataurlnewwindow');
 
     };
 
@@ -41,23 +41,20 @@ function( jquery, jsPDF, html2canvas, autotable ){
             } );
     };
 
-    var totalData;
-
     function fetchAllDataPages( scope, arrayOfPages ) {
-        totalData = [];
         return arrayOfPages.reduce(function(promise, page) {
             return promise.then( function(total) {
                 return getPageData(scope, page).then(function(data) {
                     return total.concat(data);
                 });
             });
-        }, Promise.resolve(totalData));
+        }, Promise.resolve([]));
     }
 
 
     return {
 
-        do:  function( elSelector, scope ){
+        do:  function( scope ){
 
             //Headers
             var dimensions = scope.object.layout.qHyperCube.qDimensionInfo,
@@ -92,6 +89,9 @@ function( jquery, jsPDF, html2canvas, autotable ){
                 autoTableFromData(headers, res);
             });
             //-----
+
+
+
         }
     }
 
