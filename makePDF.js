@@ -24,7 +24,8 @@ function( jquery, jsPDF, autotable ){
             }
         });
 
-        doc.output('dataurlnewwindow');
+        //doc.output('dataurlnewwindow');
+        doc.save("output.pdf");
 
     };
 
