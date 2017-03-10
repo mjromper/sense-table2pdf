@@ -1,0 +1,9 @@
+{
+	"name" : "TableExport2PDF",
+	"description" : "Table export to PDF using jsPDF-Autotable",
+	"preview": "TablePDFexport.png",
+	"type" : "visualization",
+	"icon" : "table",
+	"version": "1.0",
+	"author": "Manuel Romero"
+}
