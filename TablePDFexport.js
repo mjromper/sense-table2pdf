@@ -8,7 +8,7 @@ define( [
     function ( jquery,qlik, makePDF ) {
         $( '<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">' ).appendTo( "head" );
 
-        function toggleId () {
+        function toggleId (theme) {
             var cnt = $( ".SmartExport-tooltip" ).remove();
             if ( cnt.length === 0 ) {
                 $( '.qv-object, .qv-panel-sheet' ).each( function ( i, el ) {
@@ -23,22 +23,58 @@ define( [
                         }
                         $( el ).find( '.SmartExport-btn' ).on( 'click', function () {
 
-                            makePDF.do(s);
+                            makePDF.do(s,theme);
 
                         });
                     }
                 } );
             }
         }
-
+		
+		var myThemeDropDown = {
+						ref: "props.myTheme",
+						label: "Theme",
+						type: "string",
+						component: "dropdown",
+						options: [{
+							value: "1",
+							label: "Blue Theme"
+						}, {
+							value: "2",
+							label: "Green Theme"
+						}],
+						defaultValue: "1"
+						};
+		
+		
+		var appearanceSection = {
+								uses: "settings",
+								items: {
+								myThemeDropDown: myThemeDropDown
+									}
+								};
+		
         return {
+			/*
             initialProperties: {
                 version: 1.0,
                 showTitles: false
-            }, paint: function ( $element ) {
+            },
+				*/
+			definition: {
+                type: "items",
+                component: "accordion",
+                items: {
+                    appearance: appearanceSection
+                }
+            },
+
+			
+			
+			paint: function ( $element, layout ) {
                 $( ".SmartExport-btn" ).remove();
                 $( document.body ).append( "<button class='SmartExport-btn fab'><i class='material-icons'>get_app</i></button>" );
-                $( ".SmartExport-btn" ).on( "click", toggleId );
+                $( ".SmartExport-btn" ).on( "click", toggleId(layout.props.myTheme) );
             }
         };
 

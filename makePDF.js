@@ -13,8 +13,10 @@ define(
 function( jquery, jsPDF, autotable ){
 
 
-    var autoTableFromData = function ( headers, data ) {
+    var autoTableFromData = function ( headers, data,theme ) {
         var doc = new jsPDF();
+		if(theme==1)
+		{
         doc.autoTable(headers, data, {
             columnWidth: 'wrap',
             styles: {
@@ -23,6 +25,36 @@ function( jquery, jsPDF, autotable ){
                 overflow: 'linebreak'
             }
         });
+		}
+		else if( theme ==2)
+		{
+		doc.autoTable(headers, data, {
+	    tableLineColor: [189, 195, 199],
+        tableLineWidth: 0.75,
+        styles: {
+            font: 'courier',
+            lineColor: [44, 62, 80],
+            lineWidth: 0.75
+        },
+        headerStyles: {
+            fillColor: [44, 62, 80],
+            fontSize: 15
+        },
+        bodyStyles: {
+            fillColor: [52, 73, 94],
+            textColor: 240
+        },
+        alternateRowStyles: {
+            fillColor: [74, 96, 117]
+        },
+        columnStyles: {
+            email: {
+                fontStyle: 'bold'
+            }
+        },
+		});
+			
+		}
 
         //doc.output('dataurlnewwindow');
         doc.save("output.pdf");
@@ -55,7 +87,7 @@ function( jquery, jsPDF, autotable ){
 
     return {
 
-        do:  function( scope ){
+        do:  function( scope,theme ){
 
             //Headers
             var dimensions = scope.object.layout.qHyperCube.qDimensionInfo,
@@ -87,7 +119,7 @@ function( jquery, jsPDF, autotable ){
             }
 
             fetchAllDataPages(scope, arrayOfPages).then(function( res ) {
-                autoTableFromData(headers, res);
+                autoTableFromData(headers, res,theme);
             });
             //-----
 
